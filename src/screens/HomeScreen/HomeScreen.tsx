@@ -1,11 +1,10 @@
 import { gql, useQuery } from '@apollo/client';
-import { FlatList, StyleSheet, Image, Text, Pressable, View } from "react-native";
+import { useNavigation } from '@react-navigation/native';
+import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { ModelSortDirection, PostByDateQuery, PostByDateQueryVariables } from '../../API';
 import ApiErrorMessage from '../../components/ApiErrorMessage/ApiErrorMessage';
 import FeedPost from '../../components/FeedPost/FeedPost';
-import NewTweetButton from '../../components/NewTweetButton/NewTweetButton';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import { useNavigation } from '@react-navigation/native';
 
 export const postsByDate = gql`
   query PostByDate(
@@ -75,7 +74,7 @@ const HomeScreen = () => {
   //   fetchAllPosts();
   // }, []);
 
-  const navigation = useNavigation()
+  const navigation = useNavigation();
   const { data, loading, error, refetch } = useQuery<PostByDateQuery, PostByDateQueryVariables>(
     postsByDate,
     {
@@ -94,6 +93,10 @@ const HomeScreen = () => {
 
   return (
     <View style={{ flex: 1 }}>
+      <Pressable onPress={() => navigation.navigate('NewTweet')} style={styles.header}>
+        <Text style={styles.name}>What's on your mind?</Text>
+        <Ionicons name="images" size={24} color="limegreen" style={styles.icon} />
+      </Pressable>
       <FlatList
         data={posts}
         contentContainerStyle={{ padding: 2 }}
@@ -101,19 +104,7 @@ const HomeScreen = () => {
         showsVerticalScrollIndicator={false}
         onRefresh={() => refetch()}
         refreshing={loading}
-        ListHeaderComponent={() => (
-          <Pressable onPress={() => navigation.navigate("NewTweet")} style={styles.header}>
-            <Text style={styles.name}>What's on your mind?</Text>
-            <Ionicons
-              name="images"
-              size={24}
-              color="limegreen"
-              style={styles.icon}
-            />
-          </Pressable>
-        )}
       />
-      <NewTweetButton />
     </View>
   );
 };
@@ -122,10 +113,10 @@ const styles = StyleSheet.create({
   header: {
     padding: 10,
     paddingVertical: 15,
-    flexDirection: "row",
-    alignItems: "center",
-    width: "100%",
-    backgroundColor: "white",
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '100%',
+    backgroundColor: 'white',
   },
   profileImage: {
     width: 40,
@@ -134,10 +125,10 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   name: {
-    color: "gray",
+    color: 'gray',
   },
   icon: {
-    marginLeft: "auto",
+    marginLeft: 'auto',
   },
 });
 

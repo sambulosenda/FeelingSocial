@@ -16,7 +16,7 @@ interface ICommentMenu {
 const CommentMenu = ({ comment }: ICommentMenu) => {
   const [DeleteCommentMutation] = useMutation<DeleteCommentMutation, DeleteCommentMutationVariables>(
     deleteComment,
-    { variables: { input: { id: comment.id, _version: comment._version } } }
+    //{ variables: { input: { id: comment.id, _version: comment._version } } }
   );
 
   const navigation = useNavigation<BottomTabNavigatorParamList>()

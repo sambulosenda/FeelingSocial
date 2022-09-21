@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 import { Auth, Storage } from 'aws-amplify';
@@ -19,7 +19,6 @@ const ProfileHeader = ({ user }: IProfileHeader) => {
   const { userId } = useAuthContext();
   const navigation = useNavigation<ProfileNavigationProp>();
   navigation.setOptions({ title: user?.username || 'Profile' });
-
 
   useEffect(() => {
     if (user.image) {
@@ -41,22 +40,28 @@ const ProfileHeader = ({ user }: IProfileHeader) => {
           <Text>Followers</Text>
         </View>
 
-        <View style={styles.numberContainer}>
+        <Pressable style={styles.numberContainer} onPress={() => navigation.navigate('dsadasd')}>
           <Text style={styles.numberText}>{user.nofFollowing}</Text>
           <Text>Following</Text>
-        </View>
+        </Pressable>
       </View>
 
-      <View style={{ marginTop: 10, }}>
+      <View style={{ marginVertical: 20 }}>
         <Text style={styles.name}>{user.name}</Text>
         <Text style={styles.bio}>{user.bio}</Text>
       </View>
 
-
       {userId === user.id && (
-        <View style={{ flexDirection: 'row', marginTop: 10, justifyContent: 'space-between', }}>
-          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('EditProfile')} ><Text style={styles.buttonText}>Edit Profile</Text></TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => Auth.signOut()}><Text style={styles.buttonText}>Sign Out</Text></TouchableOpacity>
+        <View style={{ flexDirection: 'row', marginTop: 10, justifyContent: 'space-between' }}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate('EditProfile')}
+          >
+            <Text style={styles.buttonText}>Edit Profile</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={() => Auth.signOut()}>
+            <Text style={styles.buttonText}>Sign Out</Text>
+          </TouchableOpacity>
         </View>
       )}
     </View>
@@ -74,7 +79,6 @@ const styles = StyleSheet.create({
   bio: {
     fontSize: 17,
     marginTop: 5,
-
   },
   button: {
     paddingHorizontal: 10,
@@ -84,13 +88,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#e0e5ff',
     borderWidth: 1,
     borderRadius: 5,
-    borderColor: '#e0e5ff'
+    borderColor: '#e0e5ff',
   },
 
   buttonText: {
     fontSize: 14,
     color: '#4b36cc',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   root: {
     padding: 10,

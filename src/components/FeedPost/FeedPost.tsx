@@ -3,8 +3,14 @@ import { useState } from 'react';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import {
   CreateLikeMutation,
-  CreateLikeMutationVariables, DeleteLikeMutation, DeleteLikeMutationVariables, LikesForPostByUserQuery,
-  LikesForPostByUserQueryVariables, Post, UpdatePostMutation, UpdatePostMutationVariables
+  CreateLikeMutationVariables,
+  DeleteLikeMutation,
+  DeleteLikeMutationVariables,
+  LikesForPostByUserQuery,
+  LikesForPostByUserQueryVariables,
+  Post,
+  UpdatePostMutation,
+  UpdatePostMutationVariables,
 } from '../../API';
 import Carousel from '../Carousel/Carousel';
 import UserImage from '../UserImage/UserImage';
@@ -22,6 +28,7 @@ import { useAuthContext } from '../../contexts/AuthContext';
 import colors from '../../theme/colors';
 import { createLike, deleteLike, likesForPostByUser, updatePost } from './queries';
 
+
 // somewhere in your app
 interface IFeedPost {
   post: Post;
@@ -29,16 +36,20 @@ interface IFeedPost {
 
 const LeftSide = ({ post }: IFeedPost) => {
   return (
-    <View style={{
-      marginTop: 10,
-    }}>
+    <View
+      style={{
+        marginTop: 10,
+      }}
+    >
       <UserImage imageKey={post?.User?.image || undefined} width={40} />
     </View>
-  )
-}
+  );
+};
 
 const RightSide = ({ post }: IFeedPost) => {
-  dayjs.extend(relativeTime)
+  const navigation = useNavigation();
+
+  dayjs.extend(relativeTime);
   const navigateToUser = () => {
     if (post.User) {
       navigation.navigate('UserProfile', { userId: post.User.id });
@@ -52,7 +63,9 @@ const RightSide = ({ post }: IFeedPost) => {
         <View style={styles.postHeaderNames}>
           <Pressable onPress={navigateToUser} style={styles.username}>
             <Text style={{ fontWeight: 'bold', fontSize: 15 }}>{post.User?.username}</Text>
-            <Text style={{ fontWeight: '200', fontSize: 11 }}>{dayjs(post.createdAt).fromNow(true)} ago</Text>
+            <Text style={{ fontWeight: '200', fontSize: 11 }}>
+              {dayjs(post.createdAt).fromNow(true)} ago
+            </Text>
           </Pressable>
           <View>
             <PostMenu post={post} />
@@ -60,23 +73,12 @@ const RightSide = ({ post }: IFeedPost) => {
         </View>
       </View>
     </View>
-  )
-}
+  );
+};
 
 const FeedPost = ({ post }: IFeedPost) => {
   const { userId } = useAuthContext();
 
-  //Store the image uri in a state
-  const [imageUri, setImageUri] = useState<String | null>(null);
-
-  let content = null;
-  if (post.image) {
-    content = <Image source={{ uri: post.image }} style={styles.image} />;
-  } else if (post.images) {
-    content = <Carousel images={post.images} />;
-  } else if (post.video) {
-    content = <VideoPlayer uri={post.video} />;
-  }
 
   const { data: usersLikeData } = useQuery<
     LikesForPostByUserQuery,
@@ -85,8 +87,10 @@ const FeedPost = ({ post }: IFeedPost) => {
 
   console.log(usersLikeData);
 
-  const userLike = (usersLikeData?.likesForPostByUser?.items || []).filter(like => !like?._deleted,)?.[0];
-  const postLikes = post.Likes?.items.filter(like => !like?._deleted) || [];
+  const userLike = (usersLikeData?.likesForPostByUser?.items || []).filter(
+    (like) => !like?._deleted
+  )?.[0];
+  const postLikes = post.Likes?.items.filter((like) => !like?._deleted) || [];
 
   const [doCreateLike] = useMutation<CreateLikeMutation, CreateLikeMutationVariables>(createLike, {
     variables: { input: { userID: userId, postID: post.id } },
@@ -95,9 +99,8 @@ const FeedPost = ({ post }: IFeedPost) => {
 
   const [doDeleteLike] = useMutation<DeleteLikeMutation, DeleteLikeMutationVariables>(deleteLike, {
     refetchQueries: ['LikesForPostByUser'],
-  })
-  const [doUpdatePost] = useMutation<UpdatePostMutation, UpdatePostMutationVariables>(updatePost)
-
+  });
+  const [doUpdatePost] = useMutation<UpdatePostMutation, UpdatePostMutationVariables>(updatePost);
 
   const incrementNofLikes = (amount: 1 | -1) => {
     doUpdatePost({
@@ -113,11 +116,11 @@ const FeedPost = ({ post }: IFeedPost) => {
 
   const likePress = () => {
     if (userLike) {
-      doDeleteLike({ variables: { input: { id: userLike.id, _version: userLike._version } }, })
-      incrementNofLikes(-1)
+      doDeleteLike({ variables: { input: { id: userLike.id, _version: userLike._version } } });
+      incrementNofLikes(-1);
     } else {
       doCreateLike();
-      incrementNofLikes(1)
+      incrementNofLikes(1);
     }
   };
 
@@ -125,11 +128,11 @@ const FeedPost = ({ post }: IFeedPost) => {
 
   const navigateToLikesPage = () => {
     navigation.navigate('LikesScreen', { id: post.id });
-  }
+  };
 
   const navigateToComments = () => {
-    navigation.navigate('CommentScreen', { postId: post.id })
-  }
+    navigation.navigate('CommentScreen', { postId: post.id });
+  };
 
   return (
     <>
@@ -151,46 +154,28 @@ const FeedPost = ({ post }: IFeedPost) => {
                 color={userLike ? colors.accent : '#e0dcdc'}
               />
               <Text style={{ color: 'grey' }}>{post.nofLikes}</Text>
-
             </Pressable>
 
-
-
-            <Pressable style={{ flexDirection: 'row' }} onPress={navigateToComments} >
-
+            <Pressable style={{ flexDirection: 'row' }} onPress={navigateToComments}>
               <Ionicons name="chatbubble-outline" size={18} style={styles.icon} color={'#e0dcdc'} />
               <Text style={{ color: 'grey' }}>{post.nofComments}</Text>
-
             </Pressable>
-
 
             <Pressable style={{ flexDirection: 'row' }} onPress={navigateToComments}>
               <Feather name="send" size={18} style={styles.icon} color={'#e0dcdc'} />
-
             </Pressable>
 
             <Pressable style={{ flexDirection: 'row' }} onPress={navigateToComments}>
-
               <Feather name="bookmark" size={18} color={'#e0dcdc'} />
-
             </Pressable>
-
-
           </View>
-
         </View>
-
-
-
       </View>
-
     </>
   );
 };
 
 const styles = StyleSheet.create({
-
-
   profilepicture: {
     marginTop: 10,
   },
@@ -201,49 +186,45 @@ const styles = StyleSheet.create({
     borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor: '#EAEEEC',
     marginTop: 10,
-    width: "100%",
+    width: '100%',
     backgroundColor: 'white',
     paddingHorizontal: 20,
     paddingBottom: 10,
   },
 
   postHeaderContainer: {
-    flexDirection: "row",
+    flexDirection: 'row',
     marginTop: 10,
     flex: 1,
-    alignItems: 'center'
+    alignItems: 'center',
   },
 
   postHeaderNames: {
     flexDirection: 'row',
     flex: 1,
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
 
   username: {
     fontWeight: 'bold',
     flexDirection: 'column',
     fontSize: 22,
-
-
   },
   icon: {
     marginRight: 4,
-
   },
   content: {
     lineHeight: 22,
     marginTop: 10,
     fontSize: 16,
-    color: "#000",
-
+    color: '#000',
   },
 
   iconContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 15,
-  }
+  },
 });
 
 export default FeedPost;

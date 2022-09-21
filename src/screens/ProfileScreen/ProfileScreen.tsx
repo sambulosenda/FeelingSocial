@@ -8,32 +8,30 @@ import { GetUserQuery, GetUserQueryVariables } from '../../API';
 
 import { useQuery } from '@apollo/client';
 import ApiErrorMessage from '../../components/ApiErrorMessage/ApiErrorMessage';
-import FeedPost from '../../components/FeedPost/FeedPost';
+import PersonalFeed from '../../components/PersonalFeed/PersonalFeed';
 import { useAuthContext } from '../../contexts/AuthContext';
 import {
   MyProfileNavigationProp,
   MyProfileRouteProp,
-  UserProfileNavigationProp
+  UserProfileNavigationProp,
+  UserProfileRouteProp,
 } from '../../types/navigation';
 import ProfileHeader from './ProfileHeader';
 import { getUser } from './queries';
-import PersonalFeed from '../../components/PersonalFeed/PersonalFeed';
 
 const ProfileScreen = () => {
-  const route = useRoute<MyProfileNavigationProp | MyProfileRouteProp>();
+  const route = useRoute<UserProfileRouteProp | MyProfileRouteProp>();
   const navigation = useNavigation<UserProfileNavigationProp | MyProfileNavigationProp>();
+
   const { userId: authUserId } = useAuthContext();
 
   const userId = route.params?.userId || authUserId;
 
+  const { data, loading, error, refetch } = useQuery<GetUserQuery, GetUserQueryVariables>(getUser, {
+    variables: { id: userId },
+  });
 
-  const { data, loading, error, refetch } = useQuery<
-    GetUserQuery,
-    GetUserQueryVariables
-  >(getUser, { variables: { id: userId } });
   const user = data?.getUser;
-
-  console.log(user);
 
   if (loading) {
     return <ActivityIndicator />;
@@ -52,13 +50,18 @@ const ProfileScreen = () => {
     );
   }
 
+  const myposts = (user.Posts?.items || []).filter((posts) => !posts?._deleted);
+  console.log(myposts);
+
   return (
     <View style={styles.root}>
+      <ProfileHeader user={user} />
       <FlatList
-        data={user.Posts?.items || []}
-        ListHeaderComponent={() => <ProfileHeader user={user} />}
-        renderItem={({ item }) => item && <PersonalFeed post={item} />}
+        data={myposts || []}
+        renderItem={({ item }) => item && <PersonalFeed post={item} user={user} />}
         showsVerticalScrollIndicator={false}
+        onRefresh={refetch}
+        refreshing={loading}
       />
     </View>
   );

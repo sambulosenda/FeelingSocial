@@ -24,8 +24,9 @@ const Comment = ({ comment }: ICommentProps) => {
       <View style={styles.middleColumn}>
         <Text style={styles.bold}>{comment.User?.username}</Text>
         <Text style={styles.commentText}>
-        <Text style={styles.bold}></Text> {comment.comment}</Text>
-        <PostMenu />
+          <Text style={styles.bold}></Text> {comment.comment}
+        </Text>
+        {/* //<PostMenu /> */}
 
         <View style={styles.footer}>
           <Text style={styles.footerText}>2 days ago</Text>
@@ -59,7 +60,7 @@ const styles = StyleSheet.create({
   commentText: {
     color: colors.black,
     lineHeight: 18,
-    marginHorizontal: 1
+    marginHorizontal: 1,
   },
   icon: {
     marginHorizontal: 5,

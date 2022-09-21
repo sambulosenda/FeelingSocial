@@ -1,37 +1,46 @@
-import React from 'react'
-import { useQuery } from '@apollo/client'
-import { useRoute } from '@react-navigation/native'
-import { FlatList, StyleSheet, Text } from 'react-native'
-import { LikesForPostByUserQuery, LikesForPostByUserQueryVariables } from '../../API'
-import ApiErrorMessage from '../../components/ApiErrorMessage/ApiErrorMessage'
-import UserListItem from '../../components/UserListItem/UserListItem'
-import { PostLikesRouteProp } from '../../types/navigation'
-import { likesForPostByUser } from './queries'
+import {View, Text, ActivityIndicator, FlatList} from 'react-native';
+import React from 'react';
+import {useQuery} from '@apollo/client';
+import {likesForPostByUser} from './queries';
+import {
+  LikesForPostByUserQuery,
+  LikesForPostByUserQueryVariables,
+} from '../../API';
+import {useRoute} from '@react-navigation/native';
+import {PostLikesRouteProp} from '../../types/navigation';
+import ApiErrorMessage from '../../components/ApiErrorMessage/ApiErrorMessage';
+import UserListItem from '../../components/UserListItem/UserListItem';
 
 const PostLikesScreen = () => {
+  const route = useRoute<PostLikesRouteProp>();
+  const {id} = route.params;
 
-  const route = useRoute<PostLikesRouteProp>()
-  const { id } = route.params;
-
-  const { data, loading, error, refetch } = useQuery<
+  const {data, loading, error, refetch} = useQuery<
     LikesForPostByUserQuery,
     LikesForPostByUserQueryVariables
-  >(likesForPostByUser, { variables: { postID: id } });
+  >(likesForPostByUser, {variables: {postID: id}});
 
-  if (loading) return <Text>Loading...</Text>
-  if (error) return <ApiErrorMessage title='Error Fetching users' message={error.message} />
+  if (loading) {
+    return <ActivityIndicator />;
+  }
 
-  const likes = data?.likesForPostByUser?.items.filter(like => !like?._deleted) || [];
+  if (error) {
+    return (
+      <ApiErrorMessage title="Error fetching likes" message={error.message} />
+    );
+  }
+
+  const likes =
+    data?.likesForPostByUser?.items.filter(like => !like?._deleted) || [];
 
   return (
     <FlatList
       data={likes}
-      renderItem={({ item }) => <UserListItem user={item?.User} />}
-      showsVerticalScrollIndicator={false}
+      renderItem={({item}) => <UserListItem user={item?.User} />}
+      refreshing={loading}
+      onRefresh={refetch}
     />
-  )
-}
+  );
+};
 
-export default PostLikesScreen
-
-const styles = StyleSheet.create({})
+export default PostLikesScreen;
