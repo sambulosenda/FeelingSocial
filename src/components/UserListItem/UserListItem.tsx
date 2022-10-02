@@ -1,27 +1,23 @@
+import { useNavigation } from '@react-navigation/native';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
-import {User} from '../../API';
+import { User } from '../../API';
 import { DEFAULT_USER_IMAGE } from '../../config/config';
 import colors from '../../theme/colors';
 import fonts from '../../theme/fonts';
-import {useNavigation} from '@react-navigation/native';
 
 interface IUserListItem {
   user: User;
 }
 
-const UserListItem = ({user}: IUserListItem) => {
-
+const UserListItem = ({ user }: IUserListItem) => {
   const navigation = useNavigation();
   const goToUserScreen = () => {
-    navigation.navigate('UserProfile', {userId: user.id});
+    navigation.navigate('UserProfile', { userId: user.id });
   };
 
   return (
     <Pressable onPress={goToUserScreen} style={styles.root}>
-       <Image
-        source={{uri: user.image || DEFAULT_USER_IMAGE}}
-        style={styles.image}
-      />
+      <Image source={{ uri: user.image || DEFAULT_USER_IMAGE }} style={styles.image} />
 
       <View>
         <Text style={styles.name}>{user.name}</Text>
@@ -42,7 +38,6 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     borderRadius: 25,
     marginRight: 10,
-    
   },
   name: {
     fontWeight: fonts.weight.bold,

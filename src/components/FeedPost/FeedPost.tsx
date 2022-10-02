@@ -1,6 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { useState } from 'react';
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import {
   CreateLikeMutation,
   CreateLikeMutationVariables,
@@ -12,9 +11,7 @@ import {
   UpdatePostMutation,
   UpdatePostMutationVariables,
 } from '../../API';
-import Carousel from '../Carousel/Carousel';
 import UserImage from '../UserImage/UserImage';
-import VideoPlayer from '../VideoPlayer/VideoPlayer';
 import PostMenu from './PostMenu';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -27,7 +24,6 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import { useAuthContext } from '../../contexts/AuthContext';
 import colors from '../../theme/colors';
 import { createLike, deleteLike, likesForPostByUser, updatePost } from './queries';
-
 
 // somewhere in your app
 interface IFeedPost {
@@ -62,7 +58,7 @@ const RightSide = ({ post }: IFeedPost) => {
       <View style={styles.postHeaderContainer}>
         <View style={styles.postHeaderNames}>
           <Pressable onPress={navigateToUser} style={styles.username}>
-            <Text style={{ fontWeight: 'bold', fontSize: 15 }}>{post.User?.username}</Text>
+            <Text style={{ fontWeight: 'bold', fontSize: 16 }}>{post.User?.username}</Text>
             <Text style={{ fontWeight: '200', fontSize: 11 }}>
               {dayjs(post.createdAt).fromNow(true)} ago
             </Text>
@@ -78,7 +74,6 @@ const RightSide = ({ post }: IFeedPost) => {
 
 const FeedPost = ({ post }: IFeedPost) => {
   const { userId } = useAuthContext();
-
 
   const { data: usersLikeData } = useQuery<
     LikesForPostByUserQuery,
@@ -216,7 +211,7 @@ const styles = StyleSheet.create({
   content: {
     lineHeight: 22,
     marginTop: 10,
-    fontSize: 16,
+    fontSize: 15,
     color: '#000',
   },
 
