@@ -315,6 +315,55 @@ export type DeleteUserInput = {
   _version?: number | null,
 };
 
+export type CreateUserFeedPostInput = {
+  id?: string | null,
+  userID: string,
+  postID: string,
+  postCreatedAt: string,
+  postOwnerID: string,
+  _version?: number | null,
+};
+
+export type ModelUserFeedPostConditionInput = {
+  userID?: ModelIDInput | null,
+  postID?: ModelIDInput | null,
+  postCreatedAt?: ModelStringInput | null,
+  postOwnerID?: ModelIDInput | null,
+  and?: Array< ModelUserFeedPostConditionInput | null > | null,
+  or?: Array< ModelUserFeedPostConditionInput | null > | null,
+  not?: ModelUserFeedPostConditionInput | null,
+};
+
+export type UserFeedPost = {
+  __typename: "UserFeedPost",
+  id: string,
+  userID: string,
+  postID: string,
+  postCreatedAt: string,
+  postOwnerID: string,
+  Post?: Post | null,
+  createdAt: string,
+  updatedAt: string,
+  _version: number,
+  _deleted?: boolean | null,
+  _lastChangedAt: number,
+  owner?: string | null,
+};
+
+export type UpdateUserFeedPostInput = {
+  id: string,
+  userID?: string | null,
+  postID?: string | null,
+  postCreatedAt?: string | null,
+  postOwnerID?: string | null,
+  _version?: number | null,
+};
+
+export type DeleteUserFeedPostInput = {
+  id: string,
+  _version?: number | null,
+};
+
 export type ModelLikeFilterInput = {
   id?: ModelIDInput | null,
   userID?: ModelIDInput | null,
@@ -395,6 +444,24 @@ export type ModelUserFilterInput = {
 export type ModelUserConnection = {
   __typename: "ModelUserConnection",
   items:  Array<User | null >,
+  nextToken?: string | null,
+  startedAt?: number | null,
+};
+
+export type ModelUserFeedPostFilterInput = {
+  id?: ModelIDInput | null,
+  userID?: ModelIDInput | null,
+  postID?: ModelIDInput | null,
+  postCreatedAt?: ModelStringInput | null,
+  postOwnerID?: ModelIDInput | null,
+  and?: Array< ModelUserFeedPostFilterInput | null > | null,
+  or?: Array< ModelUserFeedPostFilterInput | null > | null,
+  not?: ModelUserFeedPostFilterInput | null,
+};
+
+export type ModelUserFeedPostConnection = {
+  __typename: "ModelUserFeedPostConnection",
+  items:  Array<UserFeedPost | null >,
   nextToken?: string | null,
   startedAt?: number | null,
 };
@@ -1488,6 +1555,204 @@ export type DeleteUserMutation = {
   } | null,
 };
 
+export type CreateUserFeedPostMutationVariables = {
+  input: CreateUserFeedPostInput,
+  condition?: ModelUserFeedPostConditionInput | null,
+};
+
+export type CreateUserFeedPostMutation = {
+  createUserFeedPost?:  {
+    __typename: "UserFeedPost",
+    id: string,
+    userID: string,
+    postID: string,
+    postCreatedAt: string,
+    postOwnerID: string,
+    Post?:  {
+      __typename: "Post",
+      id: string,
+      createdAt?: string | null,
+      type: string,
+      description: string,
+      image?: string | null,
+      video?: string | null,
+      nofComments: number,
+      nofLikes: number,
+      userID: string,
+      User?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        email: string,
+        bio?: string | null,
+        username?: string | null,
+        website?: string | null,
+        nofPosts: number,
+        nofFollowers: number,
+        nofFollowing: number,
+        image?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      Likes?:  {
+        __typename: "ModelLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Comments?:  {
+        __typename: "ModelCommentConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    owner?: string | null,
+  } | null,
+};
+
+export type UpdateUserFeedPostMutationVariables = {
+  input: UpdateUserFeedPostInput,
+  condition?: ModelUserFeedPostConditionInput | null,
+};
+
+export type UpdateUserFeedPostMutation = {
+  updateUserFeedPost?:  {
+    __typename: "UserFeedPost",
+    id: string,
+    userID: string,
+    postID: string,
+    postCreatedAt: string,
+    postOwnerID: string,
+    Post?:  {
+      __typename: "Post",
+      id: string,
+      createdAt?: string | null,
+      type: string,
+      description: string,
+      image?: string | null,
+      video?: string | null,
+      nofComments: number,
+      nofLikes: number,
+      userID: string,
+      User?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        email: string,
+        bio?: string | null,
+        username?: string | null,
+        website?: string | null,
+        nofPosts: number,
+        nofFollowers: number,
+        nofFollowing: number,
+        image?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      Likes?:  {
+        __typename: "ModelLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Comments?:  {
+        __typename: "ModelCommentConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    owner?: string | null,
+  } | null,
+};
+
+export type DeleteUserFeedPostMutationVariables = {
+  input: DeleteUserFeedPostInput,
+  condition?: ModelUserFeedPostConditionInput | null,
+};
+
+export type DeleteUserFeedPostMutation = {
+  deleteUserFeedPost?:  {
+    __typename: "UserFeedPost",
+    id: string,
+    userID: string,
+    postID: string,
+    postCreatedAt: string,
+    postOwnerID: string,
+    Post?:  {
+      __typename: "Post",
+      id: string,
+      createdAt?: string | null,
+      type: string,
+      description: string,
+      image?: string | null,
+      video?: string | null,
+      nofComments: number,
+      nofLikes: number,
+      userID: string,
+      User?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        email: string,
+        bio?: string | null,
+        username?: string | null,
+        website?: string | null,
+        nofPosts: number,
+        nofFollowers: number,
+        nofFollowing: number,
+        image?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      Likes?:  {
+        __typename: "ModelLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Comments?:  {
+        __typename: "ModelCommentConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    owner?: string | null,
+  } | null,
+};
+
 export type GetLikeQueryVariables = {
   id: string,
 };
@@ -2534,6 +2799,207 @@ export type UsersByUsernameQuery = {
   } | null,
 };
 
+export type GetUserFeedPostQueryVariables = {
+  id: string,
+};
+
+export type GetUserFeedPostQuery = {
+  getUserFeedPost?:  {
+    __typename: "UserFeedPost",
+    id: string,
+    userID: string,
+    postID: string,
+    postCreatedAt: string,
+    postOwnerID: string,
+    Post?:  {
+      __typename: "Post",
+      id: string,
+      createdAt?: string | null,
+      type: string,
+      description: string,
+      image?: string | null,
+      video?: string | null,
+      nofComments: number,
+      nofLikes: number,
+      userID: string,
+      User?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        email: string,
+        bio?: string | null,
+        username?: string | null,
+        website?: string | null,
+        nofPosts: number,
+        nofFollowers: number,
+        nofFollowing: number,
+        image?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      Likes?:  {
+        __typename: "ModelLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Comments?:  {
+        __typename: "ModelCommentConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    owner?: string | null,
+  } | null,
+};
+
+export type ListUserFeedPostsQueryVariables = {
+  filter?: ModelUserFeedPostFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListUserFeedPostsQuery = {
+  listUserFeedPosts?:  {
+    __typename: "ModelUserFeedPostConnection",
+    items:  Array< {
+      __typename: "UserFeedPost",
+      id: string,
+      userID: string,
+      postID: string,
+      postCreatedAt: string,
+      postOwnerID: string,
+      Post?:  {
+        __typename: "Post",
+        id: string,
+        createdAt?: string | null,
+        type: string,
+        description: string,
+        image?: string | null,
+        video?: string | null,
+        nofComments: number,
+        nofLikes: number,
+        userID: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type SyncUserFeedPostsQueryVariables = {
+  filter?: ModelUserFeedPostFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  lastSync?: number | null,
+};
+
+export type SyncUserFeedPostsQuery = {
+  syncUserFeedPosts?:  {
+    __typename: "ModelUserFeedPostConnection",
+    items:  Array< {
+      __typename: "UserFeedPost",
+      id: string,
+      userID: string,
+      postID: string,
+      postCreatedAt: string,
+      postOwnerID: string,
+      Post?:  {
+        __typename: "Post",
+        id: string,
+        createdAt?: string | null,
+        type: string,
+        description: string,
+        image?: string | null,
+        video?: string | null,
+        nofComments: number,
+        nofLikes: number,
+        userID: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type UserFeedQueryVariables = {
+  userID: string,
+  postCreatedAt?: ModelStringKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelUserFeedPostFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type UserFeedQuery = {
+  userFeed?:  {
+    __typename: "ModelUserFeedPostConnection",
+    items:  Array< {
+      __typename: "UserFeedPost",
+      id: string,
+      userID: string,
+      postID: string,
+      postCreatedAt: string,
+      postOwnerID: string,
+      Post?:  {
+        __typename: "Post",
+        id: string,
+        createdAt?: string | null,
+        type: string,
+        description: string,
+        image?: string | null,
+        video?: string | null,
+        nofComments: number,
+        nofLikes: number,
+        userID: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
 export type OnCreateLikeSubscription = {
   onCreateLike?:  {
     __typename: "Like",
@@ -3560,5 +4026,200 @@ export type OnDeleteUserSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+  } | null,
+};
+
+export type OnCreateUserFeedPostSubscriptionVariables = {
+  owner?: string | null,
+};
+
+export type OnCreateUserFeedPostSubscription = {
+  onCreateUserFeedPost?:  {
+    __typename: "UserFeedPost",
+    id: string,
+    userID: string,
+    postID: string,
+    postCreatedAt: string,
+    postOwnerID: string,
+    Post?:  {
+      __typename: "Post",
+      id: string,
+      createdAt?: string | null,
+      type: string,
+      description: string,
+      image?: string | null,
+      video?: string | null,
+      nofComments: number,
+      nofLikes: number,
+      userID: string,
+      User?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        email: string,
+        bio?: string | null,
+        username?: string | null,
+        website?: string | null,
+        nofPosts: number,
+        nofFollowers: number,
+        nofFollowing: number,
+        image?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      Likes?:  {
+        __typename: "ModelLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Comments?:  {
+        __typename: "ModelCommentConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnUpdateUserFeedPostSubscriptionVariables = {
+  owner?: string | null,
+};
+
+export type OnUpdateUserFeedPostSubscription = {
+  onUpdateUserFeedPost?:  {
+    __typename: "UserFeedPost",
+    id: string,
+    userID: string,
+    postID: string,
+    postCreatedAt: string,
+    postOwnerID: string,
+    Post?:  {
+      __typename: "Post",
+      id: string,
+      createdAt?: string | null,
+      type: string,
+      description: string,
+      image?: string | null,
+      video?: string | null,
+      nofComments: number,
+      nofLikes: number,
+      userID: string,
+      User?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        email: string,
+        bio?: string | null,
+        username?: string | null,
+        website?: string | null,
+        nofPosts: number,
+        nofFollowers: number,
+        nofFollowing: number,
+        image?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      Likes?:  {
+        __typename: "ModelLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Comments?:  {
+        __typename: "ModelCommentConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnDeleteUserFeedPostSubscriptionVariables = {
+  owner?: string | null,
+};
+
+export type OnDeleteUserFeedPostSubscription = {
+  onDeleteUserFeedPost?:  {
+    __typename: "UserFeedPost",
+    id: string,
+    userID: string,
+    postID: string,
+    postCreatedAt: string,
+    postOwnerID: string,
+    Post?:  {
+      __typename: "Post",
+      id: string,
+      createdAt?: string | null,
+      type: string,
+      description: string,
+      image?: string | null,
+      video?: string | null,
+      nofComments: number,
+      nofLikes: number,
+      userID: string,
+      User?:  {
+        __typename: "User",
+        id: string,
+        name: string,
+        email: string,
+        bio?: string | null,
+        username?: string | null,
+        website?: string | null,
+        nofPosts: number,
+        nofFollowers: number,
+        nofFollowing: number,
+        image?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      Likes?:  {
+        __typename: "ModelLikeConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      Comments?:  {
+        __typename: "ModelCommentConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
