@@ -977,3 +977,183 @@ export const deleteUser = /* GraphQL */ `
     }
   }
 `;
+export const createUserFeedPost = /* GraphQL */ `
+  mutation CreateUserFeedPost(
+    $input: CreateUserFeedPostInput!
+    $condition: ModelUserFeedPostConditionInput
+  ) {
+    createUserFeedPost(input: $input, condition: $condition) {
+      id
+      userID
+      postID
+      postCreatedAt
+      postOwnerID
+      Post {
+        id
+        createdAt
+        type
+        description
+        image
+        video
+        nofComments
+        nofLikes
+        userID
+        User {
+          id
+          name
+          email
+          bio
+          username
+          website
+          nofPosts
+          nofFollowers
+          nofFollowing
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        Likes {
+          nextToken
+          startedAt
+        }
+        Comments {
+          nextToken
+          startedAt
+        }
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      owner
+    }
+  }
+`;
+export const updateUserFeedPost = /* GraphQL */ `
+  mutation UpdateUserFeedPost(
+    $input: UpdateUserFeedPostInput!
+    $condition: ModelUserFeedPostConditionInput
+  ) {
+    updateUserFeedPost(input: $input, condition: $condition) {
+      id
+      userID
+      postID
+      postCreatedAt
+      postOwnerID
+      Post {
+        id
+        createdAt
+        type
+        description
+        image
+        video
+        nofComments
+        nofLikes
+        userID
+        User {
+          id
+          name
+          email
+          bio
+          username
+          website
+          nofPosts
+          nofFollowers
+          nofFollowing
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        Likes {
+          nextToken
+          startedAt
+        }
+        Comments {
+          nextToken
+          startedAt
+        }
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      owner
+    }
+  }
+`;
+export const deleteUserFeedPost = /* GraphQL */ `
+  mutation DeleteUserFeedPost(
+    $input: DeleteUserFeedPostInput!
+    $condition: ModelUserFeedPostConditionInput
+  ) {
+    deleteUserFeedPost(input: $input, condition: $condition) {
+      id
+      userID
+      postID
+      postCreatedAt
+      postOwnerID
+      Post {
+        id
+        createdAt
+        type
+        description
+        image
+        video
+        nofComments
+        nofLikes
+        userID
+        User {
+          id
+          name
+          email
+          bio
+          username
+          website
+          nofPosts
+          nofFollowers
+          nofFollowing
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        Likes {
+          nextToken
+          startedAt
+        }
+        Comments {
+          nextToken
+          startedAt
+        }
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      owner
+    }
+  }
+`;
