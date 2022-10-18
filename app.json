@@ -1,4 +1,9 @@
 {
   "name": "Instaphotoapp",
-  "displayName": "Instaphotoapp"
+  "displayName": "Instaphotoapp",
+  "extra": {
+    "eas": {
+      "projectId": "3f9c4d16-92d1-42ba-b365-363694a0f76a"
+    }
+  }
 }

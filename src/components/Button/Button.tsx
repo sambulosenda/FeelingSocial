@@ -21,11 +21,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.border,
     borderRadius: 5,
-
     padding: 5,
-
     alignItems: 'center',
-
     margin: 5,
   },
   text: {
