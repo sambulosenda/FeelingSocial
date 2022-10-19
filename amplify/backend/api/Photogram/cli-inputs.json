@@ -5,17 +5,12 @@
     "serviceName": "AppSync",
     "gqlSchemaPath": "/Users/sambulosenda/Documents/Socialpost-App/amplify/backend/api/Photogram/schema.graphql",
     "defaultAuthType": {
-      "mode": "API_KEY",
-      "keyDescription": "api key description",
-      "expirationTime": 30
+      "mode": "AMAZON_COGNITO_USER_POOLS",
+      "cognitoUserPoolId": "authPhotogram"
     },
     "additionalAuthTypes": [
       {
         "mode": "AWS_IAM"
-      },
-      {
-        "mode": "AMAZON_COGNITO_USER_POOLS",
-        "cognitoUserPoolId": "authPhotogram"
       }
     ],
     "conflictResolution": {

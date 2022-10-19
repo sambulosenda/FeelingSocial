@@ -1,45 +1,45 @@
 import {
-    ApolloClient,
-    InMemoryCache,
-    ApolloProvider,
-    useQuery,
-    gql,
-    ApolloLink, 
-    httpd,
-    createHttpLink
-  } from "@apollo/client";
+  ApolloClient,
+  ApolloLink,
+  ApolloProvider,
+  createHttpLink,
+  InMemoryCache,
+} from '@apollo/client';
 
-  import { AuthOptions, createAuthLink, AUTH_TYPE } from 'aws-appsync-auth-link';
-  import {createSubscriptionHandshakeLink} from 'aws-appsync-subscription-link';
+import { AuthOptions, AUTH_TYPE, createAuthLink } from 'aws-appsync-auth-link';
+import { createSubscriptionHandshakeLink } from 'aws-appsync-subscription-link';
 
-  import config from '../aws-exports'
+import config from '../aws-exports';
+import { useAuthContext } from '../contexts/AuthContext';
 
-interface IClient{
-    children: React.ReactNode
+interface IClient {
+  children: React.ReactNode;
 }
 
-const url = config.aws_appsync_graphqlEndpoint;; 
+const url = config.aws_appsync_graphqlEndpoint;
 const region = config.aws_appsync_region;
-const auth: AuthOptions = {
-    type: config.aws_appsync_authenticationType as AUTH_TYPE.API_KEY,
-    apiKey: config.aws_appsync_apiKey,
-}
 
-const httpLink = createHttpLink({uri: url})
+const httpLink = createHttpLink({ uri: url });
 
-const link = ApolloLink.from([
-    createAuthLink({url, region, auth}),
-    createSubscriptionHandshakeLink({url, region, auth}, httpLink)
-])
+const Client = ({ children }: IClient) => {
+  const { user } = useAuthContext();
+  const jwtToken = user?.getSignInUserSession()?.getAccessToken().getJwtToken() || '';
 
-const client = new ApolloClient({
+  const auth: AuthOptions = {
+    type: config.aws_appsync_authenticationType as AUTH_TYPE.AMAZON_COGNITO_USER_POOLS,
+    jwtToken,
+  };
+
+  const link = ApolloLink.from([
+    createAuthLink({ url, region, auth }),
+    createSubscriptionHandshakeLink({ url, region, auth }, httpLink),
+  ]);
+
+  const client = new ApolloClient({
     link,
-    cache: new InMemoryCache()
+    cache: new InMemoryCache(),
   });
 
-const Client = ({children}: IClient) => {
-   return (
-       <ApolloProvider client={client}>{children}</ApolloProvider>
-   ) 
-}
-export default Client
+  return <ApolloProvider client={client}>{children}</ApolloProvider>;
+};
+export default Client;

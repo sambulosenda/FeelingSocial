@@ -9,13 +9,13 @@ Amplify.configure(config);
 
 const App = () => {
   return (
-    <AuthContextProvider>
-      <MenuProvider>
+    <MenuProvider>
+      <AuthContextProvider>
         <Client>
           <Navigation />
         </Client>
-      </MenuProvider>
-    </AuthContextProvider>
+      </AuthContextProvider>
+    </MenuProvider>
   );
 };
 
