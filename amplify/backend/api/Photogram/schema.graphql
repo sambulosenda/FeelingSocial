@@ -45,16 +45,28 @@ type User @model @auth(rules: [{ allow: private, operations: [read] }, { allow: 
   Posts: [Post] @hasMany(indexName: "byUser", fields: ["id"])
   Comments: [Comment] @hasMany(indexName: "byUser", fields: ["id"])
   Likes: [Like] @hasMany(indexName: "byUser", fields: ["id"])
+
+  Followers: [UserFollow] @hasMany(indexName: "byFollowee", fields: ["id"])
+  Followings: [UserFollow] @hasMany(indexName: "byFollower", fields: ["id"])
+}
+
+type UserFollow @model @auth(rules: [{ allow: private, operations: [read] }, { allow: owner }]) {
+  id: ID!
+
+  followerID: ID!
+    @index(name: "byFollower", sortKeyFields: ["followeeID"], queryField: "UserFollowings")
+  followeeID: ID!
+    @index(name: "byFollowee", sortKeyFields: ["followerID"], queryField: "UserFollowers")
+
+  Follower: User @belongsTo(fields: ["followerID"])
+  Followee: User @belongsTo(fields: ["followeeID"])
 }
 
 type UserFeedPost @model @auth(rules: [{ allow: owner }]) {
   id: ID!
-
   userID: ID! @index(name: "byUser", sortKeyFields: ["postCreatedAt"], queryField: "userFeed")
-
   postID: ID! @index(name: "byPost")
   postCreatedAt: AWSDateTime!
   postOwnerID: ID! @index(name: "byPostOwner")
-
   Post: Post @hasOne(fields: ["postID"])
 }

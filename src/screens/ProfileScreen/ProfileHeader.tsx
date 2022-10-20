@@ -1,13 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 import { Auth, Storage } from 'aws-amplify';
-import { User } from '../../API';
+import {
+  CreateUserFollowMutation,
+  CreateUserFollowMutationVariables,
+  DeleteUserFeedPostMutationVariables,
+  DeleteUserFollowMutation,
+  User,
+  UserFollowingsQuery,
+  UserFollowingsQueryVariables,
+} from '../../API';
 
+import { useMutation, useQuery } from '@apollo/client';
 import UserImage from '../../components/UserImage/UserImage';
 import { useAuthContext } from '../../contexts/AuthContext';
 import { ProfileNavigationProp } from '../../types/navigation';
+import { createUserFollow, deleteUserFollow, userFollowings } from './queries';
 
 interface IProfileHeader {
   user: User;
@@ -18,6 +28,22 @@ const ProfileHeader = ({ user }: IProfileHeader) => {
   const [imageUri, setImageUri] = useState<String | null>(null);
   const { userId } = useAuthContext();
   const navigation = useNavigation<ProfileNavigationProp>();
+
+  const { data: userFollowingsData, loading: userFollowingsLoading } = useQuery<
+    UserFollowingsQuery,
+    UserFollowingsQueryVariables
+  >(userFollowings, { variables: { followerID: userId, followeeID: { eq: user.id } } });
+
+  const [doFollow, { loading: followingLoading }] = useMutation<
+    CreateUserFollowMutation,
+    CreateUserFollowMutationVariables
+  >(createUserFollow, { variables: { input: { followeeID: user.id, followerID: userId } } });
+
+  const [doUnfollow, { loading: unfollowingLoading }] = useMutation<
+    DeleteUserFollowMutation,
+    DeleteUserFeedPostMutationVariables
+  >(deleteUserFollow);
+
   navigation.setOptions({ title: user?.username || 'Profile' });
 
   useEffect(() => {
@@ -25,6 +51,32 @@ const ProfileHeader = ({ user }: IProfileHeader) => {
       Storage.get(user.image).then(setImageUri);
     }
   }, [user]);
+
+  const userFollowObject = userFollowingsData?.UserFollowings?.items?.filter(
+    (items) => !items?._deleted
+  )[0];
+
+  console.log(userFollowingsData);
+
+  const onFollowPress = async () => {
+    if (!!userFollowObject) {
+      //delete it
+      try {
+        await doUnfollow({
+          variables: { input: { id: userFollowObject.id, _version: userFollowObject._version } },
+        });
+      } catch (error) {
+        Alert.alert('Failed to unfollow the user', (error as Error).message);
+      }
+    } else {
+      //follow it
+      try {
+        await doFollow();
+      } catch (error) {
+        Alert.alert('Failed to follow the user', (error as Error).message);
+      }
+    }
+  };
 
   return (
     <View style={styles.root}>
@@ -51,7 +103,7 @@ const ProfileHeader = ({ user }: IProfileHeader) => {
         <Text style={styles.bio}>{user.bio}</Text>
       </View>
 
-      {userId === user.id && (
+      {userId === user.id ? (
         <View style={{ flexDirection: 'row', marginTop: 10, justifyContent: 'space-between' }}>
           <TouchableOpacity
             style={styles.button}
@@ -63,6 +115,14 @@ const ProfileHeader = ({ user }: IProfileHeader) => {
             <Text style={styles.buttonText}>Sign Out</Text>
           </TouchableOpacity>
         </View>
+      ) : (
+        <TouchableOpacity
+          style={styles.button}
+          onPress={onFollowPress}
+          disabled={userFollowingsLoading || followingLoading || unfollowingLoading}
+        >
+          <Text style={styles.buttonText}>{!!userFollowObject ? 'Unfollow' : 'Follow'}</Text>
+        </TouchableOpacity>
       )}
     </View>
   );

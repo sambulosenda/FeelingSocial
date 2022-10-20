@@ -31,6 +31,14 @@ export const onCreateLike = /* GraphQL */ `
           nextToken
           startedAt
         }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -118,6 +126,14 @@ export const onUpdateLike = /* GraphQL */ `
           nextToken
           startedAt
         }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -202,6 +218,14 @@ export const onDeleteLike = /* GraphQL */ `
           startedAt
         }
         Likes {
+          nextToken
+          startedAt
+        }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
           nextToken
           startedAt
         }
@@ -294,6 +318,14 @@ export const onCreateComment = /* GraphQL */ `
           nextToken
           startedAt
         }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -382,6 +414,14 @@ export const onUpdateComment = /* GraphQL */ `
           nextToken
           startedAt
         }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -467,6 +507,14 @@ export const onDeleteComment = /* GraphQL */ `
           startedAt
         }
         Likes {
+          nextToken
+          startedAt
+        }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
           nextToken
           startedAt
         }
@@ -562,6 +610,14 @@ export const onCreatePost = /* GraphQL */ `
           nextToken
           startedAt
         }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -643,6 +699,14 @@ export const onUpdatePost = /* GraphQL */ `
           nextToken
           startedAt
         }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -721,6 +785,14 @@ export const onDeletePost = /* GraphQL */ `
           startedAt
         }
         Likes {
+          nextToken
+          startedAt
+        }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
           nextToken
           startedAt
         }
@@ -834,6 +906,36 @@ export const onCreateUser = /* GraphQL */ `
         nextToken
         startedAt
       }
+      Followers {
+        items {
+          id
+          followerID
+          followeeID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      Followings {
+        items {
+          id
+          followerID
+          followeeID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        nextToken
+        startedAt
+      }
       createdAt
       updatedAt
       _version
@@ -897,6 +999,36 @@ export const onUpdateUser = /* GraphQL */ `
           id
           userID
           postID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      Followers {
+        items {
+          id
+          followerID
+          followeeID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      Followings {
+        items {
+          id
+          followerID
+          followeeID
           createdAt
           updatedAt
           _version
@@ -979,6 +1111,309 @@ export const onDeleteUser = /* GraphQL */ `
         }
         nextToken
         startedAt
+      }
+      Followers {
+        items {
+          id
+          followerID
+          followeeID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      Followings {
+        items {
+          id
+          followerID
+          followeeID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      owner
+    }
+  }
+`;
+export const onCreateUserFollow = /* GraphQL */ `
+  subscription OnCreateUserFollow($owner: String) {
+    onCreateUserFollow(owner: $owner) {
+      id
+      followerID
+      followeeID
+      Follower {
+        id
+        name
+        email
+        bio
+        username
+        website
+        nofPosts
+        nofFollowers
+        nofFollowing
+        image
+        Posts {
+          nextToken
+          startedAt
+        }
+        Comments {
+          nextToken
+          startedAt
+        }
+        Likes {
+          nextToken
+          startedAt
+        }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      Followee {
+        id
+        name
+        email
+        bio
+        username
+        website
+        nofPosts
+        nofFollowers
+        nofFollowing
+        image
+        Posts {
+          nextToken
+          startedAt
+        }
+        Comments {
+          nextToken
+          startedAt
+        }
+        Likes {
+          nextToken
+          startedAt
+        }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      owner
+    }
+  }
+`;
+export const onUpdateUserFollow = /* GraphQL */ `
+  subscription OnUpdateUserFollow($owner: String) {
+    onUpdateUserFollow(owner: $owner) {
+      id
+      followerID
+      followeeID
+      Follower {
+        id
+        name
+        email
+        bio
+        username
+        website
+        nofPosts
+        nofFollowers
+        nofFollowing
+        image
+        Posts {
+          nextToken
+          startedAt
+        }
+        Comments {
+          nextToken
+          startedAt
+        }
+        Likes {
+          nextToken
+          startedAt
+        }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      Followee {
+        id
+        name
+        email
+        bio
+        username
+        website
+        nofPosts
+        nofFollowers
+        nofFollowing
+        image
+        Posts {
+          nextToken
+          startedAt
+        }
+        Comments {
+          nextToken
+          startedAt
+        }
+        Likes {
+          nextToken
+          startedAt
+        }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      owner
+    }
+  }
+`;
+export const onDeleteUserFollow = /* GraphQL */ `
+  subscription OnDeleteUserFollow($owner: String) {
+    onDeleteUserFollow(owner: $owner) {
+      id
+      followerID
+      followeeID
+      Follower {
+        id
+        name
+        email
+        bio
+        username
+        website
+        nofPosts
+        nofFollowers
+        nofFollowing
+        image
+        Posts {
+          nextToken
+          startedAt
+        }
+        Comments {
+          nextToken
+          startedAt
+        }
+        Likes {
+          nextToken
+          startedAt
+        }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      Followee {
+        id
+        name
+        email
+        bio
+        username
+        website
+        nofPosts
+        nofFollowers
+        nofFollowing
+        image
+        Posts {
+          nextToken
+          startedAt
+        }
+        Comments {
+          nextToken
+          startedAt
+        }
+        Likes {
+          nextToken
+          startedAt
+        }
+        Followers {
+          nextToken
+          startedAt
+        }
+        Followings {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
       }
       createdAt
       updatedAt
