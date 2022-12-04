@@ -22,7 +22,6 @@ export type AmplifyDependentResourcesAttributes = {
     },
     "api": {
         "Photogram": {
-            "GraphQLAPIKeyOutput": "string",
             "GraphQLAPIIdOutput": "string",
             "GraphQLAPIEndpointOutput": "string"
         }
