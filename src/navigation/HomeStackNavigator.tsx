@@ -17,6 +17,7 @@ const HomeStackNavigator = () => {
           headerTitleAlign: 'center',
           headerTitle: () => (
             <Image style={{ width: 140, height: 35 }} source={require('./logo.png')} />
+          
           ),
         }}
       />

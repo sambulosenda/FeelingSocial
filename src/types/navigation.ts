@@ -78,6 +78,7 @@ export type FeedNavigationProp = NativeStackNavigationProp<HomeStackNavigatorPar
 export type ProfileStackNavigatorParamList = {
   Profile: undefined;
   'Edit Profile': undefined;
+  UserFollow: undefined;
 };
 
 export type ProfileNavigationProp = NativeStackNavigationProp<

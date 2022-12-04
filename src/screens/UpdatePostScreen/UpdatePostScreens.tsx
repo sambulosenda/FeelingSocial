@@ -12,7 +12,7 @@ import {
 
 import ApiErrorMessage from '../../components/ApiErrorMessage/ApiErrorMessage';
 import { useAuthContext } from '../../contexts/AuthContext';
-import colors from '../../theme/colors';
+import {colors} from '../../theme/colors';
 import { UpdatePostRouteProp } from '../../types/navigation';
 import { getPost, updatePost } from './queries';
 

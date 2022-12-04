@@ -58,7 +58,9 @@ const RightSide = ({ post }: IFeedPost) => {
       <View style={styles.postHeaderContainer}>
         <View style={styles.postHeaderNames}>
           <Pressable onPress={navigateToUser} style={styles.username}>
-            <Text style={{ fontWeight: 'bold', fontSize: 16 }}>{post.User?.username}</Text>
+            <Text style={{ fontWeight: 'bold', fontSize: 16, color: colors.text }}>
+              {post.User?.username}
+            </Text>
             <Text style={{ fontWeight: '200', fontSize: 11 }}>
               {dayjs(post.createdAt).fromNow(true)} ago
             </Text>
@@ -212,7 +214,7 @@ const styles = StyleSheet.create({
     lineHeight: 22,
     marginTop: 10,
     fontSize: 15,
-    color: '#000',
+    color: colors.text,
   },
 
   iconContainer: {

@@ -18,6 +18,7 @@ import UserImage from '../../components/UserImage/UserImage';
 import { useAuthContext } from '../../contexts/AuthContext';
 import { ProfileNavigationProp } from '../../types/navigation';
 import { createUserFollow, deleteUserFollow, userFollowings } from './queries';
+import colors from '../../theme/colors';
 
 interface IProfileHeader {
   user: User;
@@ -87,12 +88,18 @@ const ProfileHeader = ({ user }: IProfileHeader) => {
           <Text style={styles.numberText}>{user.nofPosts}</Text>
           <Text>Posts</Text>
         </View>
-        <View style={styles.numberContainer}>
+        <Pressable
+          style={styles.numberContainer}
+          onPress={() => navigation.navigate('UserFollow', { screen: 'Following' })}
+        >
           <Text style={styles.numberText}>{user.nofFollowers}</Text>
           <Text>Followers</Text>
-        </View>
+        </Pressable>
 
-        <Pressable style={styles.numberContainer} onPress={() => navigation.navigate('dsadasd')}>
+        <Pressable
+          style={styles.numberContainer}
+          onPress={() => navigation.navigate('UserFollow', { screen: 'Followers' })}
+        >
           <Text style={styles.numberText}>{user.nofFollowing}</Text>
           <Text>Following</Text>
         </Pressable>
@@ -145,7 +152,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     width: '49%',
     alignItems: 'center',
-    backgroundColor: '#e0e5ff',
+    backgroundColor: colors.background,
     borderWidth: 1,
     borderRadius: 5,
     borderColor: '#e0e5ff',

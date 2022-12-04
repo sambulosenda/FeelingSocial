@@ -5,7 +5,6 @@ import { Comment as CommentType } from '../../API';
 import colors from '../../theme/colors';
 import fonts from '../../theme/fonts';
 import UserImage from '../UserImage/UserImage';
-import PostMenu from './PopMenu';
 interface ICommentProps {
   comment: CommentType;
 }

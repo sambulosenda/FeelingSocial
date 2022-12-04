@@ -31,8 +31,9 @@ function CustomInput<ContentType>({
               value={value as string}
               onChangeText={onChange}
               onBlur={onBlur}
-              autoCapitalize = "none"
+              autoCapitalize="none"
               placeholder={placeholder}
+              autoCorrect={false}
               style={styles.input}
               secureTextEntry={secureTextEntry}
             />

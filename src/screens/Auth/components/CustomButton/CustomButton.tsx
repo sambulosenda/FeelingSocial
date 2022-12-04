@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
   },
 
   container_PRIMARY: {
-    backgroundColor: colors.primary,
+    backgroundColor: colors.background,
   },
 
   container_SECONDARY: {
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
 
   text: {
     fontWeight: 'bold',
-    color: 'white',
+    color: colors.text,
   },
 
   text_PRIMARY: {},

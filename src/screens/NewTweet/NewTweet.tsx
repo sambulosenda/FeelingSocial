@@ -40,7 +40,7 @@ const NewTweet = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container]}>
       <View style={styles.headerContainer}>
         <AntDesign name="close" onPress={() => navigation.goBack()} size={30} color={'black'} />
         <TouchableOpacity style={styles.button} onPress={submit}>
@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 15,
+    paddingVertical: 20,
   },
   postInput: {
     fontSize: 20,

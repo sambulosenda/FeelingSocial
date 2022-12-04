@@ -2,10 +2,10 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Camera } from 'expo-camera';
 import { useEffect, useState } from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import colors from '../../theme/colors';
 import { FlashMode } from 'expo-camera/build/Camera.types';
 import { useNavigation } from '@react-navigation/native';
 import { CameraNavigationProp } from '../../types/navigation';
+import colors from '../../theme/colors';
 
 const flashModes = [FlashMode.off, FlashMode.on, FlashMode.auto, FlashMode.torch];
 

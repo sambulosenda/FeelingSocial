@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Image, StyleSheet, Text, TextInput, View } from 'react-native';
 import useCommentsService from '../../services/CommentService/CommentService';
 import colors from '../../theme/colors';
+
 import fonts from '../../theme/fonts';
 
 interface IInput {
@@ -71,7 +72,7 @@ const styles = StyleSheet.create({
     bottom: 15,
     fontSize: 15,
     fontWeight: fonts.weight.full,
-    color: colors.primary,
+    color: colors.primary
   },
 });
 
